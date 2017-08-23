@@ -1,0 +1,22 @@
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+	compile "com.fasterxml.jackson.core:jackson-annotations:2.4.0"
+	compile "com.fasterxml.jackson.core:jackson-core:2.4.0"
+	compile "com.fasterxml.jackson.core:jackson-databind:2.4.0"
+	compile "io.dropwizard:dropwizard-logging:1.1.2"
+	compile "net.logstash.logback:logstash-logback-encoder:4.9"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.0'
+}
