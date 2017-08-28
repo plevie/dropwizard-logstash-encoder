@@ -1,4 +1,4 @@
-package com.wikia.dropwizard.logstash.appender;
+package io.interact.dropwizard.logstash.appender;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.logging.AbstractAppenderFactory;

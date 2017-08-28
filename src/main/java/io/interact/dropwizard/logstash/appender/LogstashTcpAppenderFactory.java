@@ -1,4 +1,4 @@
-package com.wikia.dropwizard.logstash.appender;
+package io.interact.dropwizard.logstash.appender;
 
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.core.Appender;
