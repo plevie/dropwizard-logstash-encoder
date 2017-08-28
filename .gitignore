@@ -8,5 +8,9 @@ pom.xml.asc
 **.ipr
 **.iws
 .idea/
-/build/
-/bin/
+.settings/
+.gradle/
+.classpath
+.project
+build/
+bin/
