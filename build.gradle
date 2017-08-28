@@ -1,12 +1,85 @@
 apply plugin: 'java'
-apply plugin: 'maven-publish'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+apply plugin: 'signing'
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+group = "io.interact"
+archivesBaseName = "dropwizard-logstash-encoder"
+version = '1.0.0'
+
+uploadArchives {
+    repositories {
+      mavenDeployer {
+        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+  
+        repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+          authentication(userName: ossrhUsername, password: ossrhPassword)
+        }
+  
+        snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+          authentication(userName: ossrhUsername, password: ossrhPassword)
+        }
+  
+        pom.project {
+          name 'dropwizard-logstash-encoder'
+          packaging 'jar'
+          description 'Dropwizard logging addon for sending logs using the logstash-logback-encoder.'
+          url 'https://github.com/plevie/dropwizard-logstash-encoder'
+  
+          scm {
+            connection 'scm:git:https://github.com/plevie/dropwizard-logstash-encoder.git'
+            developerConnection 'scm:git@github.com:plevie/dropwizard-logstash-encoder.git'
+            url 'https://github.com/plevie/dropwizard-logstash-encoder.git'
+          }
+  
+          licenses {
+            license {
+              name 'The Apache License, Version 2.0'
+              url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+            }
+          }
+  
+          developers {
+            developer {
+              id 'plevie'
+              name 'Patrick Levie'
+            }
+          }
+        }
+      }
+    }
+  }
 
 repositories {
     mavenCentral()
-    jcenter()
+}
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
 }
 
 dependencies {
@@ -17,6 +90,13 @@ dependencies {
 	compile "net.logstash.logback:logstash-logback-encoder:4.9"
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.0'
+jar {
+    manifest {
+        attributes 'Built-Date': new Date() //now
+        attributes 'Built-By': System.getProperty('user.name')
+        attributes 'Build-Jdk': System.getProperty('java.version')
+        attributes 'Implementation-Title': "${applicationName}"
+        attributes 'Implementation-Version': "${applicationVersion}"
+        attributes 'Implementation-Vendor-Id': "${applicationGroup}"
+    }
 }
