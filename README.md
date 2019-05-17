@@ -1,5 +1,5 @@
 # dropwizard-logback-logstash-encoder
-[![DepShield Badge](https://depshield.sonatype.org/badges/owner/repository/depshield.svg)](https://depshield.github.io)
+[![DepShield Badge](https://depshield.sonatype.org/badges/plevie/dropwizard-logstash-encoder/depshield.svg)](https://depshield.github.io)
 
 [Dropwizard](http://dropwizard.io/) logging addon for sending logs using the [logstash-logback-encoder](https://github.com/logstash/logstash-logback-encoder). This is needed because Dropwizard overwrites the default mechanism for loading logback configuration (logback.xml) in favor of its application.yml files.
 
